@@ -1,0 +1,20 @@
+.animal {
+    display: inline-block;
+    border: 2px solid black;
+    width: 200px;
+    height: 100px;
+    font-size: 30px;
+    text-align: center;
+    margin: 10px;
+}
+
+.active {
+    display: inline-block;
+    border: 2px solid red;
+    width: 200px;
+    height: 100px;
+    font-size: 30px;
+    color:red;
+    text-align: center;
+    margin: 10px
+}
