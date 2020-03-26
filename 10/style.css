@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width:800px;
+    height: 600px;
+    border:gray solid 1px;
+
+}
+#box {
+    width:100px;
+    height: 100px;
+    background-color: red;
+    margin: auto;
+    margin-top: 200px;
+    text-align: center;
+    padding-top: 40px;
+}
