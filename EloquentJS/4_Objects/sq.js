@@ -136,8 +136,21 @@ function siftEvs(journal) {
   return arrayEvents;
 }
 
-// find the corralation of every event
-for (let event of  siftEvs(JOURNAL)) {
-  console.log(event + ":", phi(tableFor(event, JOURNAL)));
+// find the corralation of the events that are more than 0.1 and less than -0.1
+for (let event of siftEvs(JOURNAL)) {
+  let corralation = phi(tableFor(event, JOURNAL));
+  if(corralation > 0.1 || corralation < -0.1) {
+    console.log(event + ":" + corralation);
+  }
 }
+// finding the stongest correaltion
+for (let entry of JOURNAL) {
+  if (entry.events.includes("peanuts") && 
+     !entry.events.includes("brushed teeth")) {
+       entry.events.push("peanut teeth");
+       console.log(entry.events);
+     }
+}
+
+console.log(tableFor("peanut teeth", JOURNAL));
 
