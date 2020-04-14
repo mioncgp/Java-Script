@@ -1,25 +1,5 @@
-// Correaltion between variables is usually expressed as a value that ranges from -1 to 1.
-// A correlation of one indicatres that the two are perfectly related.
-// If you know one, you also know the other.
-//Negative one also means that the varables are perfecly related but that they are opposites when one is true, the other is false
-
-// phi coefficient - is used to measure the correlation between two Boolean variables
-// The input for phi is a frequency table containing the number of times -
-// - the diffrent combinations of the variables were observed -
-//The output of the formula is a number beteen -1 and 1;
-
-
-function phi(table) {
-    return (table[3] * table[0] - table[2] * table[1]) /
-    Math.sqrt((table[2] + table[3]) *
-        (table[0] + table[1]) *
-        (table[1] + table[3]) *
-        (table[0] + table[2]));
-}
-
-
-// data 
-let JOURNAL = [
+  // data of occurances
+  let JOURNAL = [
     {"events":["carrot","exercise","weekend"],"squirrel":false},
     {"events":["bread","pudding","brushed teeth","weekend","touched tree"],"squirrel":false},
     {"events":["carrot","nachos","brushed teeth","cycling","weekend"],"squirrel":false},
@@ -111,3 +91,53 @@ let JOURNAL = [
     {"events":["bread","brushed teeth","television","weekend"],"squirrel":false},
     {"events":["cauliflower","peanuts","brushed teeth","weekend"],"squirrel":false}
   ];
+// Correaltion between variables is usually expressed as a value that ranges from -1 to 1.
+// A correlation of one indicatres that the two are perfectly related.
+// If you know one, you also know the other.
+//Negative one also means that the varables are perfecly related but that they are opposites when one is true, the other is false
+
+// phi coefficient - is used to measure the correlation between two Boolean variables
+// The input for phi is a frequency table containing the number of times -
+// - the diffrent combinations of the variables were observed -
+//The output of the formula is a number beteen -1 and 1;
+
+// formula to calculate the PHI coefficient
+function phi(table) {
+    return (table[3] * table[0] - table[2] * table[1]) /
+    Math.sqrt((table[2] + table[3]) *
+        (table[0] + table[1]) *
+        (table[1] + table[3]) *
+        (table[0] + table[2]));
+}
+
+// function which extracts 4 numbers/measurments(or 2x2 table) from the dataset/journal
+
+function tableFor(event, journal) {
+    let table = [0, 0, 0, 0];
+    for (let entry of journal) {
+      let index = 0;
+      if (entry.events.includes(event)) index += 1;
+      if (entry.squirrel) index += 2;
+      table[index] += 1;
+    }
+    return table;
+  }
+
+  // Sorting the events
+function siftEvs(journal) {
+  let arrayEvents = [];
+  for(obj of journal) {
+    for(el of obj.events) {
+      if(!arrayEvents.includes(el)) { 
+        arrayEvents.push(el);
+      }
+    }
+  }
+  return arrayEvents;
+}
+
+// find the corralation of every event
+for (let event of  siftEvs(JOURNAL)) {
+  console.log(event + ":", phi(tableFor(event, JOURNAL)));
+}
+
