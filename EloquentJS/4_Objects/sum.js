@@ -21,18 +21,24 @@ function sumArray(array) {
 // Retrun an array between two number with an optional step
 function arrayCreate(start, end, step) {
     let array = [];
-    for(let i = 0; i <= end; i++) {
-        if(step === true) {
-            for(let x = 1; x <= array.length / step; i++) {
-                array.push(start);
-                start += step;
+        if(step) {
+            if(step > 0) {
+                for(let i = start; i <= end; i = i + step) {
+                    array.push(i);
+                }
+            } else {
+                for(let i = start; i <= end; i = i - step) {
+                    array.unshift(i);
+                }
             }
+            
         } else {
-            array.push(start);
-            start+=1;
+            for(let i = start; i <= end; i++) {
+                array.push(start);
+                start+=1;
+            }
         }
-    }
     return array;
 }
 
-console.log(arrayCreate(1, 10))
+console.log(arrayCreate(1, 10));
