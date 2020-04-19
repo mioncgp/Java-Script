@@ -41,4 +41,13 @@ function arrayCreate(start, end, step) {
     return array;
 }
 
-console.log(arrayCreate(1, 10));
+// Reversing an array
+let arr = [1, 2];
+
+function reverseArray(array) {
+    let newArray = [];
+    for (let i = array.length - 1; i >= 0; i--) {
+        newArray.push(array[i]);
+    }
+    return newArray;
+}
