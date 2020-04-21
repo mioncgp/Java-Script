@@ -79,23 +79,46 @@ function arrayToList(array) {
     return list;
 }
 
-let list = {
-    value: 1,
-    rest: { 
-        value: 2,
-        rest: { 
-            value: 3, 
-            rest: null 
-        } 
-    } 
-};
-
-
-
 function listToArray(list) {
     let array = [];
-    for (let node = list; node !== null; node = node.rest) {
+    for (let node = list; node; node = node.rest) {
       array.push(node.value);
     }
     return array;
   }
+
+function pretend(value, list) {
+    return {value, rest: list};
+}
+
+function nth(list, n) {
+    if (!list) return undefined;
+    else if (n === 0) return list.value;
+    else return nth(list.rest, n - 1);
+}
+
+// Compare objects
+function deepEqual(a, b) {
+    if (a === b) return true;
+    
+    if (a == null || typeof a != "object" ||
+        b == null || typeof b != "object") return false;
+  
+    let keysA = Object.keys(a), keysB = Object.keys(b);
+  
+    if (keysA.length != keysB.length) return false;
+  
+    for (let key of keysA) {
+      if (!keysB.includes(key) || !deepEqual(a[key], b[key])) return false;
+    }
+  
+    return true;
+  }
+  
+  let obj = {here: {is: "an"}, object: 2};
+  console.log(deepEqual(obj, obj));
+  // → true
+  console.log(deepEqual(obj, {here: 1, object: 2}));
+  // → false
+  console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+  // → true
