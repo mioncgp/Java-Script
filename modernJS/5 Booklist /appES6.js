@@ -54,6 +54,49 @@ class UI {
     }
 }
 
+
+class LS {
+
+    static getBooks() {
+        let books;
+        if(localStorage.getItem('books') === null) {
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+        return books;
+    }
+
+    static displayBooks() {
+        const books = LS.getBooks();
+
+        books.forEach(function(book) {
+            const ui = new UI;
+            ui.addBookToList(book)
+        })
+    }
+
+    static addBook(book) {
+        let books = LS.getBooks();
+        books.push(book);
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static removeBook(isbn) {
+        const books = LS.getBooks();
+
+        books.forEach(function(book, index) {
+            if(book.isbn === isbn) {
+                books.splice(index, 1);
+            }
+        });
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+}
+
+// Dom loaded
+document.addEventListener("DOMContentLoaded", LS.displayBooks);
+
 // Event listener to add element
 document.getElementById('book-form').addEventListener('submit', function(e) {
     // grab values from inputs
@@ -69,10 +112,13 @@ if(title === '' || author === '' || isbn === '') {
 } else {
     // add book to ui/list
     ui.addBookToList(book);
-    // show that addded successfully
+    // to LS
+    LS.addBook(book);
+    // show that addded 
     ui.showAlert('Book Added!', 'success');
     // clear fields
     ui.clearFields();
+    console.log(ui)
     e.preventDefault()
 }
 })
@@ -83,8 +129,11 @@ document.getElementById('book-list').addEventListener('click', function(e) {
     const ui = new UI();
     // delete item func
     ui.deleteBook(e.target);
+    // remove from LS
+    LS.removeBook(e.target.parentElement.previousElementSibling.textContent);
     // show message
     ui.showAlert("Book Removed!", 'success');
 
     e.preventDefault();
 })
+
