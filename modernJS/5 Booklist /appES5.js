@@ -29,8 +29,7 @@ UI.prototype.addBookToList = function(book) {
 UI.prototype.deleteBook = function(book) {
     // remove element
     book.parentElement.parentElement.remove();
-    // display the removal
-
+    // display the remova
 
 }
 
