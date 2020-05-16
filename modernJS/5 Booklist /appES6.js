@@ -59,10 +59,10 @@ class LS {
 
     static getBooks() {
         let books;
-        if(localStorage.getItem('books') === null) {
+        if(sessionStorage.getItem('books') === null) {
             books = [];
         } else {
-            books = JSON.parse(localStorage.getItem('books'));
+            books = JSON.parse(sessionStorage.getItem('books'));
         }
         return books;
     }
@@ -79,7 +79,7 @@ class LS {
     static addBook(book) {
         let books = LS.getBooks();
         books.push(book);
-        localStorage.setItem('books', JSON.stringify(books));
+        sessionStorage.setItem('books', JSON.stringify(books));
     }
 
     static removeBook(isbn) {
@@ -90,7 +90,7 @@ class LS {
                 books.splice(index, 1);
             }
         });
-        localStorage.setItem('books', JSON.stringify(books));
+        sessionStorage.setItem('books', JSON.stringify(books));
     }
 }
 
