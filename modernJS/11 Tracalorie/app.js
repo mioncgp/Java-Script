@@ -51,6 +51,16 @@ const ItemCtrl = (function () {
 
       return newItem;
     },
+    getItemById: function (id) {
+      let found = null;
+      // loop trough items
+      data.items.forEach(function (item) {
+        if (item.id === id) {
+          found = item;
+        }
+      });
+      return found;
+    },
     getTotalCalories: function () {
       let total = 0;
       // loop through all the items
@@ -61,6 +71,12 @@ const ItemCtrl = (function () {
       data.totalCalories = total;
 
       return data.totalCalories;
+    },
+    setCurrentItem: function (item) {
+      data.currentItem = item;
+    },
+    getCurrentItem: function () {
+      return data.currentItem;
     },
   };
 })();
@@ -142,6 +158,21 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.backBtn).style.display = "none";
       document.querySelector(UISelectors.addBtn).style.display = "inline";
     },
+    showEditState: function () {
+      document.querySelector(UISelectors.updateBtn).style.display = "inline";
+      document.querySelector(UISelectors.deleteBtn).style.display = "inline";
+      document.querySelector(UISelectors.backBtn).style.display = "inline";
+      document.querySelector(UISelectors.addBtn).style.display = "none";
+    },
+    addItemToForm: function () {
+      document.querySelector(
+        UISelectors.inputName
+      ).value = ItemCtrl.getCurrentItem().name;
+      document.querySelector(
+        UISelectors.inputCalories
+      ).value = ItemCtrl.getCurrentItem().calories;
+      UICtrl.showEditState();
+    },
   };
 })();
 
@@ -156,6 +187,11 @@ const App = (function (ItemCtrl, UICtrl) {
     document
       .querySelector(UIselectors.addBtn)
       .addEventListener("click", itemAddSubmit);
+
+    // edit icon click event
+    document
+      .querySelector(UIselectors.itemList)
+      .addEventListener("click", itemUpdateSubmit);
   };
 
   // Add item submit
@@ -176,6 +212,25 @@ const App = (function (ItemCtrl, UICtrl) {
       UICtrl.clearInput();
     }
 
+    e.preventDefault();
+  };
+
+  // Update item submit
+  const itemUpdateSubmit = function (e) {
+    if (e.target.classList.contains("edit-item")) {
+      // get id on the item
+      const listId = e.target.parentNode.parentNode.id;
+      // split in into array
+      const listIdArr = listId.split("-");
+      // get the actual id
+      const id = parseInt(listIdArr[1]);
+      // get item
+      const itemToEdit = ItemCtrl.getItemById(id);
+      // sett current item
+      ItemCtrl.setCurrentItem(itemToEdit);
+      // Add item to form
+      UICtrl.addItemToForm();
+    }
     e.preventDefault();
   };
 
