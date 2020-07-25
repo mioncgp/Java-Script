@@ -9,7 +9,7 @@
     "start": "webpack-dev-server --output-public-path=/build/",
     "json:server": "json-server --watch api/db.json"
   },
-  "author": "Brad Traversy",
+  "author": "Mike",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -21,6 +21,6 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "json-server": "^0.12.1"
+    "json-server": "^0.12.2"
   }
 }
